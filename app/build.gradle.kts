@@ -1,6 +1,7 @@
 plugins {
     id("application")
     alias(libs.plugins.versions)
+    alias(libs.plugins.spotless)
 }
 
 group = "hexlet.code"
@@ -22,4 +23,18 @@ tasks.test {
 
 application {
     mainClass = "hexlet.code.App"
+}
+
+tasks.getByName("run", JavaExec::class) {
+    standardInput = System.`in`
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        googleJavaFormat().aosp()
+        formatAnnotations()
+        leadingTabsToSpaces(4)
+    }
 }
